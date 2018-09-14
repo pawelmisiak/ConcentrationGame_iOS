@@ -15,7 +15,9 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
     //the lazy saids not to use it until it is called (create the var when you use it)
     //lazy variable cannot have didSet
     
-    @IBOutlet weak var Reset: UIButton!
+    @IBAction func newGame() {
+        print("reset button works")
+    }
     
     @IBOutlet weak var flipCountLabel: UILabel!
     
@@ -40,7 +42,7 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
                 emojiChoices.remove(at: randomIndex) // after making the selection we have to remove it from the choices
             }
         }
-         return emoji[card.identifier] ?? "?"  // < -- this is the same as the declaration above
+         return emoji[card.identifier] ?? "?"
     }
     
     @IBAction func touchCard(_ sender: UIButton) {
@@ -56,31 +58,18 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
         updateViewFromModel();
     }
     
-        func updateViewFromModel() {
-            for index in cardButtons.indices {
-                let button = cardButtons[index]
-                let card = game.cards[index]
-                if card.isFaceUp {
-                    button.setTitle(emoji(for: card), for: UIControlState.normal)
-                    button.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-                } else {
-                    button.setTitle("", for: UIControlState.normal)
-                    button.backgroundColor = card.isMatched ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1) // same as the one above
-                    
-                }
-  
+    func updateViewFromModel() {
+        for index in cardButtons.indices {
+            let button = cardButtons[index]
+            let card = game.cards[index]
+            if card.isFaceUp {
+                button.setTitle(emoji(for: card), for: UIControlState.normal)
+                button.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            } else {
+                button.setTitle("", for: UIControlState.normal)
+                button.backgroundColor = card.isMatched ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
             }
+        }
     }
-    
-    //this got replaced by updateViewFromModel()
-//    func flipCard(withEmoji emoji: String, on button: UIButton) {
-//        if button.currentTitle == emoji {
-//            button.setTitle("", for: UIControlState.normal)
-//            button.backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
-//        } else {
-//            button.setTitle(emoji, for: UIControlState.normal)
-//            button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-//        }
-//    }
 }
 

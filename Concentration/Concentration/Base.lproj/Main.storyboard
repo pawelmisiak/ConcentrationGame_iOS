@@ -188,13 +188,15 @@
                                 <state key="normal" title="Reset">
                                     <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="newGame" destination="BYZ-38-t0r" eventType="touchUpInside" id="mEX-Ig-shh"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="Reset" destination="zvo-3I-rTb" id="FhH-6h-zTm"/>
                         <outlet property="flipCountLabel" destination="0Nu-Ev-zZe" id="NdY-xB-CUG"/>
                         <outletCollection property="cardButtons" destination="kYH-vD-HpP" collectionClass="NSMutableArray" id="BRY-CI-hug"/>
                         <outletCollection property="cardButtons" destination="MFD-c6-bjZ" collectionClass="NSMutableArray" id="2R3-7G-6th"/>
