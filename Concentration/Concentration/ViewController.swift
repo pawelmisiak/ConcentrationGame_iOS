@@ -44,39 +44,32 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
     }
     
     @IBAction func touchCard(_ sender: UIButton) {
-        flipCount += 1
+        if sender.backgroundColor != #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) {
+            flipCount += 1
+        }
         if let cardNumber = cardButtons.index(of: sender) {
             game.chooseCard(at: cardNumber)
-//            print("cardNumber = \(cardNumber)")
-//            flipCard(withEmoji: emojiChoices[cardNumber], on: sender)
             updateViewFromModel();
         } else {
             print("Chosen card isn't in the cardButtons")
         }
-        
+        updateViewFromModel();
     }
     
         func updateViewFromModel() {
-//        for index in 0..<cardButton.count {
-//
-//        } same as below
-        
-        for index in cardButtons.indices {
-            let button = cardButtons[index]
-            let card = game.cards[index]
-            if card.isFaceUp {
-                button.setTitle(emoji(for: card), for: UIControlState.normal)
-                button.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-            } else {
-                button.setTitle("", for: UIControlState.normal)
-//                if card.isMatched { // this is the same as below
-//                    button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
-//                }else {
-//                    button.backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
-//                }
-                button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1) // same as the one above
+            for index in cardButtons.indices {
+                let button = cardButtons[index]
+                let card = game.cards[index]
+                if card.isFaceUp {
+                    button.setTitle(emoji(for: card), for: UIControlState.normal)
+                    button.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+                } else {
+                    button.setTitle("", for: UIControlState.normal)
+                    button.backgroundColor = card.isMatched ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1) // same as the one above
+                    
+                }
+  
             }
-        }
     }
     
     //this got replaced by updateViewFromModel()
