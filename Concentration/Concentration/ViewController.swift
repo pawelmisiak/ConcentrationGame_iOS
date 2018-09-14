@@ -11,10 +11,11 @@ import UIKit
 
 class ViewController: UIViewController { //ViewController extends UIViewController which means it inherits here
     
-    //var game: Concentration = Concentration() // variable game is of type concentration and initialized to an empty type
-    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count / 2)) // the same thing as the one above
+    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count / 2))
     //the lazy saids not to use it until it is called (create the var when you use it)
     //lazy variable cannot have didSet
+    
+    @IBOutlet weak var Reset: UIButton!
     
     @IBOutlet weak var flipCountLabel: UILabel!
     
@@ -39,13 +40,6 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
                 emojiChoices.remove(at: randomIndex) // after making the selection we have to remove it from the choices
             }
         }
-        
-
-//        if emoji[card.identifier] != nil {
-//            return emoji[card.identifier]!
-//        } else {
-//                return "?"
-//        }
          return emoji[card.identifier] ?? "?"  // < -- this is the same as the declaration above
     }
     

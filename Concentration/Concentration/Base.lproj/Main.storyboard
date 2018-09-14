@@ -194,6 +194,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="Reset" destination="zvo-3I-rTb" id="FhH-6h-zTm"/>
                         <outlet property="flipCountLabel" destination="0Nu-Ev-zZe" id="NdY-xB-CUG"/>
                         <outletCollection property="cardButtons" destination="kYH-vD-HpP" collectionClass="NSMutableArray" id="BRY-CI-hug"/>
                         <outletCollection property="cardButtons" destination="MFD-c6-bjZ" collectionClass="NSMutableArray" id="2R3-7G-6th"/>
