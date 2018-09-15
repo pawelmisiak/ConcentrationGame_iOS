@@ -16,7 +16,16 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
     //lazy variable cannot have didSet
     
     @IBAction func newGame() {
-        print("reset button works")
+//        print("reset button works")
+        for index in cardButtons.indices {
+            let button = cardButtons[index]
+            var card = game.cards[index]
+            button.setTitle(emoji(for: card), for: UIControlState.normal)
+            card.isFaceUp = false
+            card.isMatched = false
+            button.setTitle("", for: UIControlState.normal)
+            button.backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+        }
     }
     
     @IBOutlet weak var flipCountLabel: UILabel!
