@@ -11,21 +11,33 @@ import UIKit
 
 class ViewController: UIViewController { //ViewController extends UIViewController which means it inherits here
     
-    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count / 2))
+    private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+    
+    var numberOfPairsOfCards: Int {
+            return (cardButtons.count + 1) / 2
+    }
     //the lazy saids not to use it until it is called (create the var when you use it)
     //lazy variable cannot have didSet
+    let themes = [
+        ["👻","🎃","☠️","👹","😈","🧟‍♂️","🧛🏻‍♂️","☄️","🍬"],
+        ["🤾‍♀️","🏊‍♂️","🥊","🏈","🚴‍♂️","🏓","🏌🏻‍♂️","⚽️","🎳"],
+        ["🍝","🥓","🍜","🥞","🍕","🍟","🍔","🌮","🌭"],
+        ["🇵🇱","🇺🇸","🇵🇹","🇦🇷","🇨🇦","🇮🇹","🇩🇪","🇯🇵","🏴󠁧󠁢󠁥󠁮󠁧󠁿"],
+        ["🛸","🛥","🚂","🚅","🚲","🚜","🚗","✈️","🚀"],
+        ["😇","😤","😑","🤢","😱","😂","😎","😡","😀"],
+    ]
+    
     
     @IBAction func newGame() {
-//        print("reset button works")
-        for index in cardButtons.indices {
-            let button = cardButtons[index]
-            var card = game.cards[index]
-            button.setTitle(emoji(for: card), for: UIControlState.normal)
-            card.isFaceUp = false
-            card.isMatched = false
-            button.setTitle("", for: UIControlState.normal)
-            button.backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+        print("pressed new game button")
+        flipCount = 0
+        emojiChoices = themes[0]
+        for index in game.cards.indices {
+            game.cards[index].isFaceUp = false
+            game.cards[index].isMatched = false
         }
+        updateViewFromModel()
+        game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
     }
     
     @IBOutlet weak var flipCountLabel: UILabel!
@@ -58,6 +70,8 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
         if sender.backgroundColor != #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) {
             flipCount += 1
         }
+        print(cardButtons.index(of: sender) ?? 0)
+        
         if let cardNumber = cardButtons.index(of: sender) {
             game.chooseCard(at: cardNumber)
             updateViewFromModel();
@@ -69,14 +83,14 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
     
     func updateViewFromModel() {
         for index in cardButtons.indices {
-            let button = cardButtons[index]
-            let card = game.cards[index]
-            if card.isFaceUp {
-                button.setTitle(emoji(for: card), for: UIControlState.normal)
-                button.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            let currentButton = cardButtons[index]
+            let currentCard = game.cards[index]
+            if currentCard.isFaceUp {
+                currentButton.setTitle(emoji(for: currentCard), for: UIControlState.normal)
+                currentButton.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             } else {
-                button.setTitle("", for: UIControlState.normal)
-                button.backgroundColor = card.isMatched ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+                currentButton.setTitle("", for: UIControlState.normal)
+                currentButton.backgroundColor = currentCard.isMatched ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
             }
         }
     }
