@@ -102,7 +102,6 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
                 currentButton.backgroundColor = currentCard.isMatched ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) : correspondingThemeColor[currentThemeNumber]
             }
         }
-        print(currentThemeNumber)
     }
 }
 
