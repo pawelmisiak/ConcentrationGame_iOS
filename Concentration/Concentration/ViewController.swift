@@ -30,7 +30,8 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
     var currentThemeNumber = 0
     
     @IBAction func newGame() {
-        flipCount = 0
+//        flipCount = 0
+        game.numberOfFlips = 0
         emojiChoices = themes[Int(arc4random_uniform(UInt32(themes.count)))]
         currentThemeNumber = getThemeNumber()
         for index in game.cards.indices {
@@ -45,11 +46,12 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
     
     @IBOutlet var cardButtons: [UIButton]!
     
-    var flipCount = 0 {
-        didSet { //whenever someone changes the flip count it will change the lable on the screen
-            flipCountLabel.text = "Flips: \(flipCount)"
-        }
-    }
+    
+//    var flipCount = 0 {
+//        didSet { //whenever someone changes the flip count it will change the lable on the screen
+//            flipCountLabel.text = "Flips: \(flipCount)"
+//        }
+//    }
     
     //var emoji = Dictionary<Int, String>() // Dictionary is a struct and it hast to be initialized
     var emoji = [Int: String]() // the same as above
@@ -77,9 +79,9 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
     }
     
     @IBAction func touchCard(_ sender: UIButton) {
-        if sender.backgroundColor != #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) {
-            flipCount += 1
-        }
+//        if sender.backgroundColor != #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) {
+//            flipCount += 1
+//        }
         
         if let cardNumber = cardButtons.index(of: sender) {
             game.chooseCard(at: cardNumber)
@@ -91,6 +93,7 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
     }
     
     func updateViewFromModel() {
+        flipCountLabel.text = "Flips: \(game.numberOfFlips)"
         for index in cardButtons.indices {
             let currentButton = cardButtons[index]
             let currentCard = game.cards[index]
