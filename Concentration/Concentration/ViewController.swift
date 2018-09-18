@@ -26,12 +26,13 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
         ["🛸","🛥","🚂","🚅","🚲","🚜","🚗","✈️","🚀"],
         ["😇","😤","😑","🤢","😱","😂","😎","😡","😀"],
     ]
-    
+    let correspondingThemeColor = [#colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1),#colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1),#colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1),#colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1),#colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1),#colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)]
+    var currentThemeNumber = 0
     
     @IBAction func newGame() {
-        print("pressed new game button")
         flipCount = 0
-        emojiChoices = themes[0]
+        emojiChoices = themes[Int(arc4random_uniform(UInt32(themes.count)))]
+        currentThemeNumber = getThemeNumber()
         for index in game.cards.indices {
             game.cards[index].isFaceUp = false
             game.cards[index].isMatched = false
@@ -55,6 +56,15 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
     
     var emojiChoices = ["👻","🎃","☠️","👹","😈","🧟‍♂️","🧛🏻‍♂️","☄️","🍬"]
     
+    private func getThemeNumber() -> Int {
+        for idx in themes.indices {
+            if emojiChoices == themes[idx] {
+                return idx
+            }
+        }
+        return 0
+    }
+    
     func emoji(for card: Card) -> String { // calling for internally card
         if emoji[card.identifier] == nil {
             if emojiChoices.count > 0 {
@@ -70,7 +80,6 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
         if sender.backgroundColor != #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) {
             flipCount += 1
         }
-        print(cardButtons.index(of: sender) ?? 0)
         
         if let cardNumber = cardButtons.index(of: sender) {
             game.chooseCard(at: cardNumber)
@@ -90,9 +99,10 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
                 currentButton.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             } else {
                 currentButton.setTitle("", for: UIControlState.normal)
-                currentButton.backgroundColor = currentCard.isMatched ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
+                currentButton.backgroundColor = currentCard.isMatched ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) : correspondingThemeColor[currentThemeNumber]
             }
         }
+        print(currentThemeNumber)
     }
 }
 
