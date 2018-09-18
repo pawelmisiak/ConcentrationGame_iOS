@@ -79,17 +79,17 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
     }
     
     @IBAction func touchCard(_ sender: UIButton) {
-//        if sender.backgroundColor != #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) {
-//            flipCount += 1
-//        }
-        
-        if let cardNumber = cardButtons.index(of: sender) {
-            game.chooseCard(at: cardNumber)
+        if sender.backgroundColor != #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) {
+            if let cardNumber = cardButtons.index(of: sender) {
+                game.chooseCard(at: cardNumber)
+                updateViewFromModel();
+            } else {
+                print("Chosen card isn't in the cardButtons")
+            }
             updateViewFromModel();
-        } else {
-            print("Chosen card isn't in the cardButtons")
+        
         }
-        updateViewFromModel();
+        
     }
     
     func updateViewFromModel() {
