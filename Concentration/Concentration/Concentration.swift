@@ -10,11 +10,12 @@ import Foundation
 
 class Concentration {
     
-    var cards = Array<Card>() // this equals [Card]() // parents are initializing an empty array 
+    var cards = Array<Card>() // this equals [Card]() // parents are initializing an empty array
     
-    var indexOfOneAndOnlyFaceUpCard: Int? // is initialized to be nil
+    private var indexOfOneAndOnlyFaceUpCard: Int? // is initialized to be nil
     
-    func chooseCard(at index: Int) {
+    
+    func chooseCard(at index: Int) { // this is not private because viewcontroller calls it so its public
         if !cards[index].isMatched {
             if let matchIndex = indexOfOneAndOnlyFaceUpCard, matchIndex != index {
                 // check if cards match
@@ -36,10 +37,18 @@ class Concentration {
     }
     
     init(numberOfPairsOfCards: Int) {
-        for _ in 0..<numberOfPairsOfCards { // unerbar says there is no var associated with this loop
+        for _ in 0..<numberOfPairsOfCards { // underscore says there is no var associated with this loop
             let card = Card()
             cards += [card, card]
         }
-        //cards.shuffle()
+        
+        // Shuffling the cards using swapAt and arc4random with upper bound
+//        var decreasingIterator = cards.count-1
+//        while decreasingIterator > 0 {
+//            let rand = Int(arc4random_uniform(UInt32(decreasingIterator)))
+//            cards.swapAt(decreasingIterator, rand)
+//            decreasingIterator -= 1
+//        }
+        
     }
 }

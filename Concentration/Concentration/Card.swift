@@ -9,13 +9,14 @@
 import Foundation
 
 struct Card {
+    
     var isFaceUp = false
     var isMatched = false
     var identifier: Int
     
-    static var identifierFactory = 0;
+    private static var identifierFactory = 0;
     
-    static func getUniqueIdentifier() -> Int {// makes it class method and not an instance method
+    private static func getUniqueIdentifier() -> Int {  // makes it class method and not an instance method
         identifierFactory += 1                  // it will only work with static variables
         return Card.identifierFactory
     }

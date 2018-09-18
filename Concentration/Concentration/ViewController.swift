@@ -11,10 +11,35 @@ import UIKit
 
 class ViewController: UIViewController { //ViewController extends UIViewController which means it inherits here
     
-    //var game: Concentration = Concentration() // variable game is of type concentration and initialized to an empty type
-    lazy var game = Concentration(numberOfPairsOfCards: (cardButtons.count / 2)) // the same thing as the one above
+    private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+    
+    var numberOfPairsOfCards: Int {
+            return (cardButtons.count + 1) / 2
+    }
     //the lazy saids not to use it until it is called (create the var when you use it)
     //lazy variable cannot have didSet
+    let themes = [
+        ["👻","🎃","☠️","👹","😈","🧟‍♂️","🧛🏻‍♂️","☄️","🍬"],
+        ["🤾‍♀️","🏊‍♂️","🥊","🏈","🚴‍♂️","🏓","🏌🏻‍♂️","⚽️","🎳"],
+        ["🍝","🥓","🍜","🥞","🍕","🍟","🍔","🌮","🌭"],
+        ["🇵🇱","🇺🇸","🇵🇹","🇦🇷","🇨🇦","🇮🇹","🇩🇪","🇯🇵","🏴󠁧󠁢󠁥󠁮󠁧󠁿"],
+        ["🛸","🛥","🚂","🚅","🚲","🚜","🚗","✈️","🚀"],
+        ["😇","😤","😑","🤢","😱","😂","😎","😡","😀"],
+    ]
+    let correspondingThemeColor = [#colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1),#colorLiteral(red: 0.4745098054, green: 0.8392156959, blue: 0.9764705896, alpha: 1),#colorLiteral(red: 0.721568644, green: 0.8862745166, blue: 0.5921568871, alpha: 1),#colorLiteral(red: 0.9764705896, green: 0.850980401, blue: 0.5490196347, alpha: 1),#colorLiteral(red: 0.9098039269, green: 0.4784313738, blue: 0.6431372762, alpha: 1),#colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)]
+    var currentThemeNumber = 0
+    
+    @IBAction func newGame() {
+        flipCount = 0
+        emojiChoices = themes[Int(arc4random_uniform(UInt32(themes.count)))]
+        currentThemeNumber = getThemeNumber()
+        for index in game.cards.indices {
+            game.cards[index].isFaceUp = false
+            game.cards[index].isMatched = false
+        }
+        updateViewFromModel()
+        game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
+    }
     
     @IBOutlet weak var flipCountLabel: UILabel!
     
@@ -31,6 +56,15 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
     
     var emojiChoices = ["👻","🎃","☠️","👹","😈","🧟‍♂️","🧛🏻‍♂️","☄️","🍬"]
     
+    private func getThemeNumber() -> Int {
+        for idx in themes.indices {
+            if emojiChoices == themes[idx] {
+                return idx
+            }
+        }
+        return 0
+    }
+    
     func emoji(for card: Card) -> String { // calling for internally card
         if emoji[card.identifier] == nil {
             if emojiChoices.count > 0 {
@@ -39,61 +73,36 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
                 emojiChoices.remove(at: randomIndex) // after making the selection we have to remove it from the choices
             }
         }
-        
-
-//        if emoji[card.identifier] != nil {
-//            return emoji[card.identifier]!
-//        } else {
-//                return "?"
-//        }
-         return emoji[card.identifier] ?? "?"  // < -- this is the same as the declaration above
+         return emoji[card.identifier] ?? "?"
     }
     
     @IBAction func touchCard(_ sender: UIButton) {
-        flipCount += 1
+        if sender.backgroundColor != #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) {
+            flipCount += 1
+        }
+        
         if let cardNumber = cardButtons.index(of: sender) {
             game.chooseCard(at: cardNumber)
-//            print("cardNumber = \(cardNumber)")
-//            flipCard(withEmoji: emojiChoices[cardNumber], on: sender)
             updateViewFromModel();
         } else {
             print("Chosen card isn't in the cardButtons")
         }
-        
+        updateViewFromModel();
     }
     
-        func updateViewFromModel() {
-//        for index in 0..<cardButton.count {
-//
-//        } same as below
-        
+    func updateViewFromModel() {
         for index in cardButtons.indices {
-            let button = cardButtons[index]
-            let card = game.cards[index]
-            if card.isFaceUp {
-                button.setTitle(emoji(for: card), for: UIControlState.normal)
-                button.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+            let currentButton = cardButtons[index]
+            let currentCard = game.cards[index]
+            if currentCard.isFaceUp {
+                currentButton.setTitle(emoji(for: currentCard), for: UIControlState.normal)
+                currentButton.backgroundColor = #colorLiteral(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
             } else {
-                button.setTitle("", for: UIControlState.normal)
-//                if card.isMatched { // this is the same as below
-//                    button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0)
-//                }else {
-//                    button.backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
-//                }
-                button.backgroundColor = card.isMatched ? #colorLiteral(red: 1, green: 1, blue: 1, alpha: 0) : #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1) // same as the one above
+                currentButton.setTitle("", for: UIControlState.normal)
+                currentButton.backgroundColor = currentCard.isMatched ? #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) : correspondingThemeColor[currentThemeNumber]
             }
         }
+        print(currentThemeNumber)
     }
-    
-    //this got replaced by updateViewFromModel()
-//    func flipCard(withEmoji emoji: String, on button: UIButton) {
-//        if button.currentTitle == emoji {
-//            button.setTitle("", for: UIControlState.normal)
-//            button.backgroundColor = #colorLiteral(red: 1, green: 0.5763723254, blue: 0, alpha: 1)
-//        } else {
-//            button.setTitle(emoji, for: UIControlState.normal)
-//            button.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
-//        }
-//    }
 }
 
