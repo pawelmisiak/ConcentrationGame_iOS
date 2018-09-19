@@ -87,9 +87,7 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
                 print("Chosen card isn't in the cardButtons")
             }
             updateViewFromModel();
-        
         }
-        
     }
     
     func updateViewFromModel() {

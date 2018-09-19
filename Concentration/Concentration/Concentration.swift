@@ -45,12 +45,12 @@ class Concentration {
         }
         
 //         Shuffling the cards using swapAt and arc4random with upper bound
-        var decreasingIterator = cards.count-1
-        while decreasingIterator > 0 {
-            let rand = Int(arc4random_uniform(UInt32(decreasingIterator)))
-            cards.swapAt(decreasingIterator, rand)
-            decreasingIterator -= 1
-        }
+//        var decreasingIterator = cards.count-1
+//        while decreasingIterator > 0 {
+//            let rand = Int(arc4random_uniform(UInt32(decreasingIterator)))
+//            cards.swapAt(decreasingIterator, rand)
+//            decreasingIterator -= 1
+//        }
         
     }
 }
