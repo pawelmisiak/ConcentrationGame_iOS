@@ -30,8 +30,8 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
     var currentThemeNumber = 0
     
     @IBAction func newGame() {
-//        flipCount = 0
-        game.numberOfFlips = 0
+        game.numberOfFlips = 0  // This var is reset here instead when init because it is refreshed to 0 on press
+        game.points = 0 // The same reason as above
         emojiChoices = themes[Int(arc4random_uniform(UInt32(themes.count)))]
         currentThemeNumber = getThemeNumber()
         for index in game.cards.indices {
@@ -43,6 +43,8 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
     }
     
     @IBOutlet weak var flipCountLabel: UILabel!
+    
+    @IBOutlet weak var ScoreCountLabel: UILabel!
     
     @IBOutlet var cardButtons: [UIButton]!
     
@@ -92,6 +94,7 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
     
     func updateViewFromModel() {
         flipCountLabel.text = "Flips: \(game.numberOfFlips)"
+        ScoreCountLabel.text = "Score: \(game.points)"
         for index in cardButtons.indices {
             let currentButton = cardButtons[index]
             let currentCard = game.cards[index]
