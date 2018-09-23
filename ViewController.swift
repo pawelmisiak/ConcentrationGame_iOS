@@ -30,6 +30,7 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
         return (cardButtons.count + 1) / 2
     }
     
+    
     private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
 
     @IBAction func newGame() {
