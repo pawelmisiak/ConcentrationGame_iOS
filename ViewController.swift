@@ -19,17 +19,17 @@ extension UIColor {
 }
 
 class ViewController: UIViewController { //ViewController extends UIViewController which means it inherits here
+    
 
+    // this function starts with the background as an inverse of the button color
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.view.backgroundColor = correspondingThemeColor[currentThemeNumber].inverse()
     }
 
     var numberOfPairsOfCards: Int {
         return (cardButtons.count + 1) / 2
     }
-    
     
     private lazy var game = Concentration(numberOfPairsOfCards: numberOfPairsOfCards)
 
@@ -91,7 +91,7 @@ class ViewController: UIViewController { //ViewController extends UIViewControll
     }
     
     @IBAction func touchCard(_ sender: UIButton) {
-        if sender.backgroundColor != #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1) {
+        if sender.backgroundColor != correspondingThemeColor[currentThemeNumber].inverse() {
             if let cardNumber = cardButtons.index(of: sender) {
                 game.chooseCard(at: cardNumber)
                 updateViewFromModel();
