@@ -1,10 +1,24 @@
-//
-//  Concentration.swift
-//  Concentration
-//
 //  Created by Pawel Misiak on 9/5/18.
 //  Copyright © 2018 Pawel Misiak. All rights reserved.
-//
+/*
+ Concentration Game Project
+ File Name: Concentration.swift
+ 
+ Description of the file:
+ This file works as a Model for the Concentration game
+ 
+ Functions and variables:
+ cards[] - an array that holds cards in the initialization part
+ numberOfFlips - holds value for number of flipped cards
+ points - holds value of the current score
+ seenCard[] - an array that holds indices of the cards that were already seen
+ unseen - a boolien value to check if current card was seen yet or not
+ indexOfOneAndOnlyFaceUpCard - tracks which card it is currently face up
+ chooseCard() - function that turns card over, checks if other card is also uncovered, checks for matches and assigns points
+ 
+ Issues:
+ */
+
 
 import Foundation
 
@@ -17,7 +31,7 @@ class Concentration {
     // Following three var's will help with counting points
     var points = 0
     var seenCards = [Int]()
-    var unseen = true
+    var unseen = true //set the initial value to true as the card wasn't seen yet
     
     private var indexOfOneAndOnlyFaceUpCard: Int? // is initialized to be nil
     
@@ -28,7 +42,6 @@ class Concentration {
         for currCard in seenCards.indices { // check if the card was already seen
             if seenCards[currCard] == index {
                 points -= 1
-                print("got him with:", index)
                 unseen = false // the card was seen so change the value to adjust the points
             }
         }
@@ -58,8 +71,6 @@ class Concentration {
             }
         }
         seenCards.append(index) // add the card to our seen collection
-//        print("All the seen cards: ", seenCards) TESTING
-//        print("we got points:", points) TESTING
     }
     
     init(numberOfPairsOfCards: Int) {
